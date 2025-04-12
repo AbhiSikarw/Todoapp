@@ -1,0 +1,559 @@
+/* app/globals.css */
+:root {
+  --primary-color: #00bcd4; /* Keeping defined color */
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --border-color: #ddd;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; /* Modern font stack */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  /* background-color: var(--primary-color); */ /* Match image: white header */
+  background-color: white;
+  padding: 10px 20px;
+  /* color: white; */ /* Match image: dark text */
+  color: var(--text-color);
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.header .logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header .logo svg {
+  width: 28px; /* Match image: slightly larger */
+  height: 28px;
+  /* fill: white; */ /* Match image: teal icon */
+  fill: #00C4B4; /* Teal color like image */
+}
+
+.header .logo h1 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #000; /* Black text */
+    margin: 0;
+}
+
+/* Main layout grid */
+.todo-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Desktop: 1/3 for list, 2/3 for detail */
+  gap: 20px;
+}
+
+.todo-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Space between create button and list */
+  /* Allow container to potentially scroll if needed, though list itself scrolls */
+  min-height: 0;
+}
+
+.todo-list {
+  background-color: white;
+  border-radius: 8px; /* Slightly rounder */
+  padding: 16px;
+  border: 1px solid var(--border-color);
+  flex-grow: 1; /* Allow list to fill space in its column */
+  overflow-y: auto; /* Enable vertical scroll for the list */
+  max-height: calc(100vh - 150px); /* Example max height calculation */
+  min-height: 200px; /* Ensure it has some minimum height */
+  display: flex; /* Use flex for internal layout */
+  flex-direction: column;
+}
+
+.search-container {
+  /* Assuming search is within TodoList, adjust if needed */
+  margin-bottom: 16px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.search-container input {
+  width: 100%;
+  padding: 10px 16px 10px 40px; /* Padding for icon */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #f9f9f9; /* Light background for search */
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px; /* Icon on the left */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  pointer-events: none; /* Prevent interaction */
+  font-size: 16px;
+}
+
+.todo-item {
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  background-color: white;
+  display: block; /* Ensure anchor takes full width */
+  text-decoration: none; /* Remove default anchor underline */
+  color: inherit; /* Inherit text color */
+}
+.todo-item:last-child {
+    margin-bottom: 0; /* Remove margin from last item in the list */
+}
+
+.todo-item:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border-color: #ccc;
+}
+
+/* Style for selected item (border highlight) */
+.todo-item.selected {
+  border-left: 4px solid var(--primary-color);
+  padding-left: 13px; /* Adjust padding: 16px - 4px border + 1px original border */
+  border-color: var(--primary-color);
+}
+
+.todo-item h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+  font-weight: 600; /* Semi-bold */
+  color: #111;
+}
+
+.todo-item p {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 8px;
+  /* Limit description lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Show max 2 lines */
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+}
+
+.todo-item .date {
+  font-size: 12px;
+  color: #888;
+  text-align: right; /* Align date to the right */
+}
+
+/* Detail view styles */
+.todo-detail {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  border: 1px solid var(--border-color);
+  /* Allow detail to grow if needed */
+  min-height: 200px;
+}
+
+.todo-detail h2 {
+  font-size: 22px; /* Slightly smaller than default */
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111;
+}
+
+.todo-detail p {
+  font-size: 15px;
+  margin-bottom: 16px;
+  line-height: 1.6;
+  white-space: pre-wrap; /* Respect newlines */
+  word-break: break-word; /* Break long words */
+}
+
+.todo-detail .date { /* Styling for date if shown in detail */
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* Toolbar for actions */
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 20px 0;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap; /* Allow buttons to wrap on small screens */
+}
+
+.toolbar button {
+  background: none;
+  border: 1px solid transparent; /* Placeholder for hover consistency */
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #555;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.toolbar button:hover {
+  background-color: #f0f0f0;
+  border-color: #ddd;
+  color: #111;
+}
+
+/* Delete button positioning (often top-right) */
+.delete-button {
+  position: absolute;
+  top: 20px; /* Adjust positioning */
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #aaa;
+  padding: 4px;
+  font-size: 22px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.delete-button:hover {
+  color: #ff5252;
+}
+
+/* Pagination links */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto; /* Push to bottom if inside flex container */
+  padding-top: 16px; /* Space above pagination */
+  border-top: 1px solid var(--border-color); /* Separator */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.pagination a {
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  background-color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 1;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination a:hover:not(.disabled):not(.active) {
+  background-color: #f0f0f0;
+  border-color: #ccc;
+}
+
+.pagination .active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+  font-weight: 500;
+}
+
+.pagination .disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+  pointer-events: none; /* Prevent clicks */
+}
+
+/* General Button Styles */
+.btn {
+  padding: 10px 16px; /* Consistent padding */
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  text-align: center;
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+.btn-primary:hover {
+  background-color: #00a8bf; /* Darker shade */
+}
+
+.btn-secondary {
+  background-color: #f5f5f5;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+}
+.btn-secondary:hover {
+  background-color: #eee;
+}
+
+.btn-dark {
+  background-color: black;
+  color: white;
+  width: 100%; /* Make create button full width by default */
+}
+.btn-dark span { /* Style for '+' sign */
+  font-size: 20px;
+  line-height: 1;
+}
+.btn-dark:hover {
+  background-color: #333;
+}
+
+/* Form Styles */
+.create-form,
+form { /* Apply base styles to forms */
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border-color);
+}
+.create-form { /* Specific margin for create form */
+    margin-bottom: 16px;
+}
+
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group label { /* Optional: Add labels for accessibility */
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 10px; /* Increase padding */
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.2); /* Focus ring */
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical; /* Allow vertical resize */
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px; /* Slightly larger gap */
+  margin-top: 16px; /* Space above action buttons */
+}
+
+
+/* ------------------------- */
+/* Mobile Responsiveness */
+/* ------------------------- */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .header {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  /* Stack list and detail vertically */
+  .todo-container {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 10px; /* Reduce gap between stacked items */
+  }
+
+  .todo-list-container {
+     gap: 10px; /* Reduce gap */
+  }
+
+  /* Adjustments for list on mobile */
+  .todo-list {
+    padding: 10px;
+    max-height: none; /* Allow list to show all items without internal scroll */
+    overflow-y: visible;
+    border-radius: 6px; /* Consistent radius */
+  }
+
+  .search-container input {
+      padding: 9px 14px 9px 35px; /* Adjust padding */
+      font-size: 13px;
+  }
+  .search-icon {
+      left: 10px;
+      font-size: 15px;
+  }
+
+  /* Adjustments for detail view on mobile */
+  .todo-detail {
+    padding: 16px;
+    border-radius: 6px;
+  }
+
+  .todo-detail h2 {
+      font-size: 20px;
+  }
+  .todo-detail p {
+      font-size: 14px;
+  }
+  .todo-detail .date {
+      font-size: 12px;
+  }
+
+  .delete-button {
+      top: 16px;
+      right: 16px;
+      font-size: 24px; /* Make delete easier to tap */
+  }
+
+  .toolbar {
+      margin: 16px 0;
+      padding-bottom: 12px;
+      gap: 8px;
+  }
+  .toolbar button {
+      padding: 5px 7px;
+      font-size: 13px;
+  }
+  .toolbar button svg { /* Adjust icon size if using SVGs */
+      width: 16px;
+      height: 16px;
+  }
+
+  .pagination {
+      flex-wrap: wrap; /* Allow buttons to wrap */
+      justify-content: center;
+      gap: 6px;
+      padding-top: 10px;
+      margin-top: 10px;
+  }
+  .pagination a {
+    padding: 5px 8px;
+    font-size: 13px;
+  }
+
+  /* Form adjustments */
+  .create-form,
+  form {
+      padding: 12px;
+      border-radius: 6px;
+  }
+  .form-group input[type="text"],
+  .form-group textarea {
+      padding: 9px;
+      font-size: 13px;
+  }
+  .form-actions {
+      gap: 8px;
+      margin-top: 12px;
+  }
+  .btn {
+      padding: 9px 14px;
+      font-size: 13px;
+  }
+}
+
+/* Optional: Further adjustments for very small screens */
+@media (max-width: 480px) {
+  .container {
+      padding: 5px;
+  }
+  .header {
+      padding: 8px 10px;
+  }
+  .header .logo h1 {
+      font-size: 20px;
+  }
+  .header .logo svg {
+      width: 24px;
+      height: 24px;
+  }
+
+  .todo-list, .todo-detail, .create-form, form {
+      padding: 10px;
+      border-radius: 4px;
+  }
+
+  .todo-item {
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+  }
+  .todo-item h3 {
+      font-size: 14px;
+  }
+  .todo-item p {
+      font-size: 12px;
+      -webkit-line-clamp: 1; /* Show only 1 line */
+  }
+  .todo-item .date {
+      font-size: 11px;
+  }
+
+  .todo-detail h2 {
+      font-size: 18px;
+  }
+  .todo-detail p {
+      font-size: 13px;
+  }
+
+  .btn {
+      padding: 8px 12px;
+      font-size: 12px;
+  }
+   .pagination a {
+      padding: 4px 7px;
+      font-size: 12px;
+  }
+}
